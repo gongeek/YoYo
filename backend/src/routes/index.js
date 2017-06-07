@@ -3,10 +3,10 @@ const CONFIG = require('../../config.json')
 
 const appendModFlag = (comment) => {
   if (comment.user === CONFIG.adminEmail) {
-    return { ...comment, mod: true }
+    return Object.assign({ mod: true }, comment)
   }
 
-  return { ...comment, mod: false }
+  return Object.assign({ mod: false }, comment)
 }
 
 module.exports = [
