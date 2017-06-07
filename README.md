@@ -7,6 +7,7 @@ A dead simple comment engine alternative to Disqus.
 ---
 
 <p align="center">
+  <img src="https://img.shields.io/badge/code_style-standard-brightgreen.svg"/>
   <img src="https://circleci.com/gh/metrue/YoYo.svg?&style=shield&circle-token=964ea66301703e4612ad72ec839ba2d4fa2f98b4"/>
   <img src="https://codecov.io/github/metrue/YoYo/coverage.svg?branch=master"/>
   <img src="https://img.shields.io/badge/License-MIT-yellow.svg"/>
