@@ -1,4 +1,4 @@
-#!/usr/bin/env node --harmony
+#!/usr/bin/env node
 
 const Server = require('../src')
 const CONFIG = require('../config.json')
@@ -11,4 +11,3 @@ server.start()
   .catch((e) => {
     console.log(e)
   })
-
