@@ -8,7 +8,7 @@
     "test": "YOYO_JWT_SECRET=YOYO_JWT_SECRET YOYO_JWT_EXPIRES_IN=1d YOYO_ADMIN_USERNAME=admin YOYO_ADMIN_PASSWORD=admin NODE_ENV=test node --harmony ./node_modules/.bin/jest --forceExit",
     "coverage": "YOYO_JWT_SECRET=YOYO_JWT_SECRET YOYO_JWT_EXPIRES_IN=1d YOYO_ADMIN_USERNAME=admin YOYO_ADMIN_PASSWORD=admin NODE_ENV=test  node --harmony ./node_modules/.bin/jest --forceExit --coverage | codecov -t d46b64da-89d9-43ed-8ea7-54f98b1b9586",
     "coverage:local": "YOYO_JWT_SECRET=YOYO_JWT_SECRET YOYO_JWT_EXPIRES_IN=1d YOYO_ADMIN_USERNAME=admin YOYO_ADMIN_PASSWORD=admin NODE_ENV=test node --harmony ./node_modules/.bin/jest --forceExit --coverage",
-    "eslint": "./node_modules/.bin/eslint src || exit 0"
+    "eslint": "standard"
   },
   "keywords": [],
   "author": "",
@@ -28,16 +28,11 @@
     "koa-static": "^3.0.0",
     "koa-unless": "1.0.0",
     "mongodb": "^2.2.19",
-    "nodemailer": "^4.0.1"
+    "nodemailer": "^4.0.1",
+    "standard": "^10.0.2"
   },
   "devDependencies": {
     "babel-preset-stage-2": "^6.24.1",
-    "eslint": "^2.10.2",
-    "eslint-config-airbnb": "^9.0.1",
-    "eslint-plugin-import": "^1.8.0",
-    "eslint-plugin-jest": "^20.0.3",
-    "eslint-plugin-jsx-a11y": "^1.2.2",
-    "eslint-plugin-react": "^5.1.1",
     "jest": "^20.0.4"
   },
   "babel": {

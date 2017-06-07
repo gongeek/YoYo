@@ -6,6 +6,12 @@
     "port": 27017,
     "db": "YoYo-dev"
   },
+  "env": {
+    "YOYO_JWT_SECRET": "YOYO_JWT_SECRET",
+    "YOYO_JWT_EXPIRES_IN": "1d",
+    "YOYO_ADMIN_USERNAME": "admin",
+    "YOYO_ADMIN_PASSWORD": "admin"
+  },
   "mail": {
     "service": "163",
     "user": "hitminghe@163.com",

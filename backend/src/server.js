@@ -7,30 +7,44 @@ const cors = require('koa-cors')
 const serve = require('koa-static')
 
 const routes = require('./routes')
-const auth = require('./auth')
+const authHelper = require('./auth_helper')
 const hooks = require('./hooks')
 const Dal = require('./dal')
-const { getToken } = require('./token')
+const { getToken, setToken } = require('./token')
 
-const authMiddleware = async (ctx, next) => {
-  const req = ctx.request
-  const shouldAuth = req.url.startsWith('/v1/api/admin') &&
-                     req.url !== '/v1/api/admin/login'
-  if (shouldAuth) {
-    const token = getToken(ctx)
-    try {
-      auth.verify(token)
-    } catch (e) {
-      ctx.status = 401
-      ctx.message = 'invalid token'
-      return
+const auth = (options = {}) => {
+  return async (ctx, next) => {
+    const req = ctx.request
+
+    if (req.url.startsWith('/v1/api/admin')) {
+      if (req.url === '/v1/api/admin/login') {
+        const { username, password } = req.body
+        if (username === options.username && password === options.password) {
+          const token = auth.sign(username, password)
+          setToken(ctx, token)
+          ctx.body = { token }
+        } else {
+          ctx.status = 401
+          ctx.message = 'invalid username or password'
+        }
+      } else {
+        const token = getToken(ctx)
+        try {
+          authHelper(options.secret, options.expiresIn).verify(token)
+        } catch (e) {
+          ctx.status = 401
+          ctx.message = 'invalid token'
+          return
+        }
+      }
     }
+
+    await next()
   }
-  await next()
 }
 
 class Server {
-  constructor(config) {
+  constructor (config) {
     this.config = config
 
     this.host = config.host || 'localhost'
@@ -41,7 +55,7 @@ class Server {
 
     this.app = new Koa()
     this.enableCORS()
-    this.app.use(authMiddleware)
+    this.app.use(auth(config.env.YOYO_JWT_SECRET, config.env.YOYO_JWT_EXPIRES_IN))
     this.app.use(compress())
     this.app.use(logger())
     this.app.use(bodyParser())
@@ -53,7 +67,7 @@ class Server {
     this.app.use(serve(staticRoot))
   }
 
-  setupHandlers() {
+  setupHandlers () {
     const router = new Router({ prefix: '/v1/api' })
 
     routes.forEach((route) => {
@@ -86,7 +100,7 @@ class Server {
       .use(router.allowedMethods())
   }
 
-  enableCORS() {
+  enableCORS () {
     const options = {
       origin: (ctx) => {
         const origin = ctx.headers.origin
@@ -99,12 +113,12 @@ class Server {
         }
         return '*'
       },
-      credentials: true,
+      credentials: true
     }
     this.app.use(cors(options))
   }
 
-  async start() {
+  async start () {
     try {
       this._server = await this.app.listen(this.port)
     } catch (e) {
@@ -112,7 +126,7 @@ class Server {
     }
   }
 
-  async stop() {
+  async stop () {
     await this._server.close()
   }
 }

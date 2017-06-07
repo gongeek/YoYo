@@ -1,10 +1,5 @@
-const auth = require('../auth')
-const { setToken } = require('../token')
 const { appendUniqueName } = require('../utils')
 const CONFIG = require('../../config.json')
-
-const YOYO_ADMIN_USERNAME = process.env.YOYO_ADMIN_USERNAME || CONFIG.env.YOYO_ADMIN_USERNAME
-const YOYO_ADMIN_PASSWORD = process.env.YOYO_ADMIN_PASSWORD || CONFIG.env.YOYO_ADMIN_PASSWORD
 
 const appendModFlag = (comment) => {
   if (comment.user === CONFIG.adminEmail) {
@@ -20,7 +15,7 @@ module.exports = [
     method: 'GET',
     handler: async (ctx) => {
       ctx.body = 'OK'
-    },
+    }
   },
   {
     path: '/comments',
@@ -29,7 +24,7 @@ module.exports = [
       const query = ctx.query
       const comments = await dal.find(query)
       ctx.body = appendUniqueName(comments).map(appendModFlag)
-    },
+    }
   },
   {
     path: '/comments',
@@ -46,7 +41,7 @@ module.exports = [
               uri,
               text,
               parent,
-              date: (new Date()).toISOString(),
+              date: (new Date()).toISOString()
             }, hooks)
           } catch (e) {
             error = e
@@ -58,7 +53,7 @@ module.exports = [
             user,
             uri,
             text,
-            date: (new Date()).toISOString(),
+            date: (new Date()).toISOString()
           }, hooks)
         } catch (e) {
           error = e
@@ -71,22 +66,13 @@ module.exports = [
         ctx.status = 500
         ctx.message = `comment created met some errors: ${error}`
       }
-    },
+    }
   },
   {
     path: '/admin/login',
     method: 'POST',
     handler: async (ctx) => {
-      const { username, password } = ctx.request.body
-      if (username === YOYO_ADMIN_USERNAME && password === YOYO_ADMIN_PASSWORD) {
-        const token = auth.sign(username, password)
-        setToken(ctx, token)
-        ctx.body = { token }
-      } else {
-        ctx.status = 401
-        ctx.message = 'invalid username or password'
-      }
-    },
+    }
   },
   {
     path: '/admin/comments',
@@ -95,7 +81,7 @@ module.exports = [
       const query = ctx.query
       const comments = await dal.queryWithUri(query)
       ctx.body = comments
-    },
+    }
   },
   {
     path: '/admin/comments/:id',
@@ -104,6 +90,6 @@ module.exports = [
       const id = ctx.params.id
       await dal.deleteOne(id)
       ctx.status = 204
-    },
-  },
+    }
+  }
 ]
