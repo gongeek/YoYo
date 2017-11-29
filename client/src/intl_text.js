@@ -3,8 +3,8 @@ const LANG = window.navigator.userLanguage || window.navigator.language
 let emailPlaceholderText
 let publlishButtonTitleText
 
-emailPlaceholderText = '电邮地址'
-publlishButtonTitleText = '发布'
+emailPlaceholderText = 'email'
+publlishButtonTitleText = '评论'
 
 // switch (LANG) {
 //   case 'zh-TW':

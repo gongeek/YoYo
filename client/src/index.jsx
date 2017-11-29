@@ -167,10 +167,9 @@ class App extends React.Component {
   }
 }
 
-const COMMENTOR_ID = 'YoYo'
-const node = document.getElementById(COMMENTOR_ID)
-ReactDOM.render(<App />, node)
 
 window.reRenderYoYo = function () {
+  const COMMENTOR_ID = 'YoYo'
+  const node = document.getElementById(COMMENTOR_ID)
   ReactDOM.render(<App />, node)
 }

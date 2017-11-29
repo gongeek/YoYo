@@ -74,7 +74,7 @@ export default class CommentBox extends React.Component {
   }
 
   focus = () => {
-    this.editor.focus()
+    // this.editor.focus()
   };
 
   render() {
