@@ -7,7 +7,7 @@ const SubmitButton = ({ email, onEmailChange, onPublish }) => (
   <div className={styles.YoYoUserAction}>
     <input
       className={styles.YoYoEmailInput}
-      type='text'
+      type='email'
       value={email}
       placeholder={INTL_TEXT.emailPlaceholderText}
       onChange={onEmailChange}

@@ -22,7 +22,7 @@ const CommentList = ({ list }) => (
 )
 
 class App extends React.Component {
-  constructor () {
+  constructor() {
     super()
 
     this.state = {
@@ -35,11 +35,11 @@ class App extends React.Component {
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.fetchCommentList()
   }
 
-  fetchCommentList () {
+  fetchCommentList() {
     api.query(window.location.href)
       .then((res) => {
         if (res.status === 200) {
@@ -59,14 +59,14 @@ class App extends React.Component {
       })
   }
 
-  commentEmailChange (e) {
+  commentEmailChange(e) {
     const value = e.target.value
     this.setState({
       email: value
     })
   }
 
-  submit () {
+  submit() {
     const {
       email,
       parents,
@@ -96,12 +96,12 @@ class App extends React.Component {
       })
   }
 
-  reset () {
+  reset() {
     const editorState = EditorState.push(this.state.editorState, ContentState.createFromText(''))
     this.setState({ editorState, publishing: false })
   }
 
-  publish () {
+  publish() {
     const {
       email,
       editorState,
@@ -122,7 +122,7 @@ class App extends React.Component {
     }
   }
 
-  mention (id) {
+  mention(id) {
     const { parents } = this.state
 
     if (parents.indexOf(id) === -1) {
@@ -130,11 +130,11 @@ class App extends React.Component {
     }
   }
 
-  editorStateChange (editorState) {
+  editorStateChange(editorState) {
     this.setState({ editorState })
   }
 
-  render () {
+  render() {
     const {
       list,
       email,
@@ -170,3 +170,7 @@ class App extends React.Component {
 const COMMENTOR_ID = 'YoYo'
 const node = document.getElementById(COMMENTOR_ID)
 ReactDOM.render(<App />, node)
+
+window.reRenderYoYo = function () {
+  ReactDOM.render(<App />, node)
+}
